@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.io.Serializable;
+import java.util.List;
 import lombok.Data;
 
 /**
@@ -30,9 +31,13 @@ public class Categoria implements Serializable {
     @Column(name = "ruta_imagen")
     private String rutaImagen;
     private boolean activo;
-    
-    public Categoria (){
-        
+
+    @OneToMany
+    @JoinColumn(name = "id_categoria")
+    List<Producto> productos;
+
+    public Categoria() {
+
     }
 
     public Categoria(String descripcion, boolean activo) {
