@@ -11,10 +11,6 @@ import jakarta.persistence.Table;
 import java.io.Serializable;
 import lombok.Data;
 
-/**
- *
- * @author bdgam
- */
 @Data
 @Entity
 @Table(name = "producto")

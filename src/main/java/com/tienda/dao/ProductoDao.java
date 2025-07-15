@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package com.tienda.dao;
 
 import com.tienda.domain.Producto;
@@ -10,18 +6,21 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-/**
- *
- * @author bdgam
- */
 public interface ProductoDao extends JpaRepository<Producto, Long> {
 
+    // ✅ Este método usa el nombre correcto del campo en tu entidad (descripcion)
     public List<Producto> findByPrecioBetweenOrderByDescripcion(double precioInf, double precioSup);
 
+    // JPQL
     @Query(value = "SELECT a FROM Producto a where a.precio BETWEEN :precioInf AND :precioSup ORDER BY a.descripcion ASC")
     public List<Producto> metodoJPQL(@Param("precioInf") double precioInf, @Param("precioSup") double precioSup);
 
+    // SQL Nativo
     @Query(nativeQuery = true,
-            value = "SELECT * FROM producto where producto.precio BETWEEN :precioInf AND :precioSup ORDER BY producto.descripcion ASC")
+           value = "SELECT * FROM producto WHERE producto.precio BETWEEN :precioInf AND :precioSup ORDER BY producto.descripcion ASC")
     public List<Producto> metodoNativo(@Param("precioInf") double precioInf, @Param("precioSup") double precioSup);
+    // ProductoDao.java
+@Query("SELECT p FROM Producto p WHERE p.existencias BETWEEN :stockMin AND :stockMax ORDER BY p.descripcion")
+List<Producto> findByStockRange(@Param("stockMin") int stockMin, @Param("stockMax") int stockMax);
+
 }

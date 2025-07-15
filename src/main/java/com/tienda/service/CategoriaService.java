@@ -5,8 +5,7 @@
 package com.tienda.service;
 
 /**
- *
- * @author bdgam
+
  */
 import com.tienda.domain.Categoria;
 import java.util.List;
