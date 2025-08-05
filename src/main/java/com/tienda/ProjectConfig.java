@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.tienda;
+
 import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -24,34 +25,38 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-
 @Configuration
-public class ProjectConfig implements WebMvcConfigurer{
+public class ProjectConfig implements WebMvcConfigurer {
+
     @Bean
-    public LocaleResolver localeResolver(){
-      var slr  = new SessionLocaleResolver();
-      slr.setDefaultLocale(Locale.getDefault());
-      slr.setLocaleAttributeName("session.current.locale");
-      slr.setTimeZoneAttributeName("session.current.timezone");
-      return slr;
+    public LocaleResolver localeResolver() {
+        var slr = new SessionLocaleResolver();
+        slr.setDefaultLocale(Locale.getDefault());
+        slr.setLocaleAttributeName("session.current.locale");
+        slr.setTimeZoneAttributeName("session.current.timezone");
+        return slr;
     }
+
     @Bean
-    public LocaleChangeInterceptor localeChangeInterceptor(){
+    public LocaleChangeInterceptor localeChangeInterceptor() {
         var lci = new LocaleChangeInterceptor();
         lci.setParamName("lang");
         return lci;
     }
+
     @Override
-    public void addInterceptors(InterceptorRegistry registro){
+    public void addInterceptors(InterceptorRegistry registro) {
         registro.addInterceptor(localeChangeInterceptor());
     }
+
     @Bean("messageSource")
-    public MessageSource messageSource(){
+    public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasenames("messages");
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
+
     /* Los siguiente métodos son para implementar el tema de seguridad dentro del proyecto */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -59,23 +64,23 @@ public class ProjectConfig implements WebMvcConfigurer{
         registry.addViewController("/index").setViewName("index");
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/registro/nuevo").setViewName("/registro/nuevo");
- }
+    }
 
-@Bean
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((request) -> request
-                .requestMatchers("/","/index","/errores/**",
-                        "/carrito/**","/pruebas/**","/reportes/**",
-                        "/registro/**","/js/**","/webjars/**")
-                        .permitAll()
+                .requestMatchers("/", "/index", "/errores/**",
+                        "/carrito/**", "/pruebas/**", "/reporte/**", "/reportes/**",
+                        "/registro/**", "/js/**", "/webjars/**")
+                .permitAll()
                 .requestMatchers(
-                        "/producto/nuevo","/producto/guardar",
-                        "/producto/modificar/**","/producto/eliminar/**",
-                        "/categoria/nuevo","/categoria/guardar",
-                        "/categoria/modificar/**","/categoria/eliminar/**",
-                        "/usuario/nuevo","/usuario/guardar",
-                        "/usuario/modificar/**","/usuario/eliminar/**",
+                        "/producto/nuevo", "/producto/guardar",
+                        "/producto/modificar/**", "/producto/eliminar/**",
+                        "/categoria/nuevo", "/categoria/guardar",
+                        "/categoria/modificar/**", "/categoria/eliminar/**",
+                        "/usuario/nuevo", "/usuario/guardar",
+                        "/usuario/modificar/**", "/usuario/eliminar/**",
                         "/reportes/**"
                 ).hasRole("ADMIN")
                 .requestMatchers(
@@ -92,8 +97,7 @@ public class ProjectConfig implements WebMvcConfigurer{
         return http.build();
     }
 
-
-///* El siguiente método se utiliza para completar la clase no es 
+    ///* El siguiente método se utiliza para completar la clase no es 
 //    realmente funcional, la próxima semana se reemplaza con usuarios de BD */    
 //    @Bean
 //    public UserDetailsService users() {

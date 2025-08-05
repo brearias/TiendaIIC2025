@@ -23,4 +23,7 @@ public interface ProductoDao extends JpaRepository<Producto, Long> {
 @Query("SELECT p FROM Producto p WHERE p.existencias BETWEEN :stockMin AND :stockMax ORDER BY p.descripcion")
 List<Producto> findByStockRange(@Param("stockMin") int stockMin, @Param("stockMax") int stockMax);
 
+@Query("SELECT p FROM Producto p WHERE p.existencias < 3")
+List<Producto> listarProductosInventarioBajo();
+
 }

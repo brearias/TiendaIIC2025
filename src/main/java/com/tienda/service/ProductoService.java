@@ -35,5 +35,6 @@ public List<Producto> findByPrecioBetweenOrderByDescripcion(double precioInf, do
 //    Lista por stock
     public List<Producto> findByStockRange(int stockMin, int stockMax);
 
+    List<Producto> listarProductosInventarioBajo();
 
 }

@@ -62,5 +62,9 @@ public List<Producto> findByStockRange(int stockMin, int stockMax) {
     return productoDao.findByStockRange(stockMin, stockMax);
 }
 
+@Override
+public List<Producto> listarProductosInventarioBajo() {
+    return productoDao.listarProductosInventarioBajo();
+}
 
 }
